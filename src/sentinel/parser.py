@@ -30,10 +30,21 @@ def parse_failed_login(line):
 	
 	return evento
 
+def parse_file(path):
+	events = []
+
+	with open(path, "r") as file:
+		for line in file:
+			log = parse_failed_login(line)
+
+			if log is not None:
+				events.append(log)
+
+	return events
+
 def main():
-	line = "Oct 11 14:10:05 server sshd[1202]: Failed password for root from 192.168.1.50 port 50123 ssh2"
-	evento = parse_failed_login(line)
-	print(evento)
+	op = parse_file("samples/auth.log")
+	print(op)
 
 if __name__ == "__main__":
 	main()
